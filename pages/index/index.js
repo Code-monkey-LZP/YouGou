@@ -10,7 +10,9 @@ Page({
     var reqTask = wx.request({
       url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
       success: (result)=>{
-        console.log(result)
+        this.setData({
+          swiperList:result.data.message
+        })
       },
     });
     
