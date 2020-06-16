@@ -4,7 +4,10 @@ Page({
   data: {
     // 轮播图数组
     swiperList: [],
+    // 分类导航数组
     catesList: [],
+    // 商品楼层数组
+    floorList:[]
   },
   //页面开始加载 就会触发
   onLoad: function (options) {
@@ -17,8 +20,10 @@ Page({
     //     })
     //   },
     // });
+    // 调用
     this.getSwiperList();
     this.getCateList();
+    this.getFloorList()
   },
   //获取轮播图数据
   getSwiperList() {
@@ -35,6 +40,15 @@ Page({
       .then(result => {
         this.setData({
           catesList: result.data.message
+        })
+      })
+  },
+  //获取商品楼层数据
+  getFloorList() {
+    request({ url: "https://api-hmugo-web.itheima.net/api/public/v1/home/floordata" })
+      .then(result => {
+        this.setData({
+          floorList: result.data.message
         })
       })
   },
