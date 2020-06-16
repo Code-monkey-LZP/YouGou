@@ -60,4 +60,12 @@
     </view>
     <!-- 商品楼层 结束 -->
 
+    <!-- 注释 开始-->
+    <view class="copy">
+        <text class="copyright">
+           © 2020-林志鹏个人商城 版权所有 
+        </text>
+    </view>
+    <!-- 注释 结束-->
+
 </view>

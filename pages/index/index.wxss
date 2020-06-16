@@ -43,3 +43,11 @@
   width: 100%;
   height: 100%;
 }
+.copy {
+  text-align: center;
+  padding-bottom: 20rpx;
+}
+.copy .copyright {
+  font-size: 30rpx;
+  color: #ddd;
+}
