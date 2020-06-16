@@ -3,7 +3,8 @@ import { request } from "../../request/index.js"
 Page({
   data: {
     // 轮播图数组
-    swiperList: []
+    swiperList: [],
+    catesList: [],
   },
   //页面开始加载 就会触发
   onLoad: function (options) {
@@ -16,10 +17,24 @@ Page({
     //     })
     //   },
     // });
+    this.getSwiperList();
+    this.getCateList();
+  },
+  //获取轮播图数据
+  getSwiperList() {
     request({ url: "https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata" })
       .then(result => {
         this.setData({
           swiperList: result.data.message
+        })
+      })
+  },
+  //获取分类导航数据
+  getCateList() {
+    request({ url: "https://api-hmugo-web.itheima.net/api/public/v1/home/catitems" })
+      .then(result => {
+        this.setData({
+          catesList: result.data.message
         })
       })
   },
