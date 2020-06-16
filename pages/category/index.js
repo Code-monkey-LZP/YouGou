@@ -7,7 +7,9 @@ Page({
     // 右侧的商品数据
     rightContent: [],
     // 被点击的左侧的菜单
-    currentIndex: 0
+    currentIndex: 0,
+    // 右侧内容滚动条距离顶部的距离
+    scrollTop:0
   },
   // 接口的返回数据
   Cates: [],
@@ -82,7 +84,9 @@ Page({
     let rightContent = this.Cates[index].children;
     this.setData({
       currentIndex: index,
-      rightContent
+      rightContent,
+      // 重新设置 右侧内容的scroll-view标签的距离顶部的距离
+      scrollTop:0
     });
   }
 })
