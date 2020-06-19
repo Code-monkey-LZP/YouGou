@@ -66,8 +66,12 @@ Page({
     this.setData({
       // 拼接了数组
       goodsList: [...this.data.goodsList,...res.goods]
-    })
+    });
+
+    // 关闭下拉刷新的窗口 如果没有调用下拉刷新的窗口 直接关闭也不会报错  
+    wx.stopPullDownRefresh();
   },
+  
   // 标题点击事件 从子组件传递过来
   handleTabsItemChange(e) {
     // 1.获取被点击的标题索引
@@ -92,5 +96,16 @@ Page({
       this.QueryParams.pagenum++;
       this.getGoodsList();
     }
+  },
+  // 下拉刷新事件 
+  onPullDownRefresh(){
+    // 1 重置数组
+    this.setData({
+      goodsList:[]
+    })
+    // 2 重置页码
+    this.QueryParams.pagenum=1;
+    // 3 发送请求
+    this.getGoodsList();
   }
 })
