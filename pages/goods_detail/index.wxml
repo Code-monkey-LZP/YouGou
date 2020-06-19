@@ -1,10 +1,30 @@
 <view class="detail_swiper">
+    <!-- 轮播图 开始 -->
     <swiper autoplay circular indicator-dots>
-        <swiper-item
-        wx:for="{{goodsObj.pics}}"
-        wx:key="pics_id"
-        >
-        <image mode="widthFix" src="{{item.pics_mid}}"></image>
+        <swiper-item wx:for="{{goodsObj.pics}}" wx:key="pics_id">
+            <image mode="widthFix" src="{{item.pics_mid}}"></image>
         </swiper-item>
     </swiper>
+    <!-- 轮播图 结束 -->
+
+    <!-- 描述&价格 开始 -->
+    <view class="goods_price">￥{{goodsObj.goods_price}}</view>
+    <view class="goods_name_row">
+        <view class="goods_name">{{goodsObj.goods_name}}{{goodsObj.goods_name}}</view>
+        <view class="goods_collect" bindtap="handleCollect">
+            <text class="iconfont   {{isCollect?'icon-shoucang1':'icon-shoucang'}} "></text>
+            <view class="collect_text">收藏</view>
+        </view>
+    </view>
+    <!-- 描述&价格 结束 -->
+
+<!-- 图文详情 开始 -->
+<view class="goods_info">
+    <view class="goods_info_title">图文详情</view>
+    <view class="goods_info_content">
+        <!-- 富文本 -->
+        <rich-text nodes="{{goodsObj.goods_introduce}}"></rich-text>
+    </view>
+</view>
+<!-- 图文详情 结束 -->
 </view>
