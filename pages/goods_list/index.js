@@ -1,4 +1,6 @@
 // pages/goods_list/index.js
+import { request } from "../../request/index.js";
+import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
   data: {
     tabs: [
@@ -17,14 +19,31 @@ Page({
         value: "价格",
         isActive: false
       }
-    ]
+    ],
+    goodsList:[]
+  },
+  // 接口要的参数
+  QueryParams:{
+    query:"",
+    cid:"",
+    pagenum:1,
+    pagesize:10
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    this.QueryParams.cid=options.cid;
+    this.getGoodsList();
+  },
+
+  // 获取商品列表数据
+  async getGoodsList(){
+    const res=await request({url:"/goods/search",data:this.QueryParams});
+    this.setData({
+      goodsList:res.goods
+    })
   },
   // 标题点击事件 从子组件传递过来
   handleTabsItemChange(e) {
