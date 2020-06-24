@@ -74,10 +74,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "商品详情",
 					"pathName": "pages/goods_detail/index",
-					"query": "id=43982",
+					"query": "goods_id=43982",
 					"scene": null
 				}
 			]
