@@ -12,36 +12,29 @@
       scope 值 false 
       1 引导用户 自己 打开 授权设置页面(wx.openSetting) 当用户重新给与 获取地址权限的时候 
       2 获取收货地址
-4 把获取到的收货地址 存入到 本地存储中
+4 把获取到的收货地址 存入到  本地存储中
 */
+
+import { getSetting, chooseAddress, openSetting } from "../../utils/asyncWx.js";
+import regeneratorRuntime from '../../lib/runtime/runtime';
+
 Page({
   // 点击 收货地址
-  handleChooseAddress() {
-    // 1.获取 权限状态
-    wx.getSetting({
-      success: (result) => {
-        // 2.获取权限状态 只要发现一些属性名很怪异的时候，都要使用[]形式来获取属性值
-        const scopeAddress = result.authSetting["scope.address"];
-        if (scopeAddress === true || scopeAddress === undefined) {
-          wx.chooseAddress({
-            success: (result1) => {
-              console.log(result1);
-          }
-          });
-        } else {
-          // 3.用户曾经拒绝授予权限 先引导用户打开授权页面
-          wx.openSetting({
-            success: (result2) => {
-              // 4.可以调用 获取收获地址代码
-              wx.chooseAddress({
-                success:(result3)=>{
-                  console.log(result3)
-                }
-              })
-            },
-          });
-        }
-      },
-    });
+  async handleChooseAddress() {
+    try {
+      // 1.获取 权限状态
+      const res1 = await getSetting();
+      const scopeAddress = res1.authSetting["scope.address"];
+      // 2.判断权限状态
+      if (scopeAddress === false) {
+        await openSetting();
+      }
+      // 3.调用 获取收获地址的API
+      const address = await chooseAddress();
+      // 4.存入到缓存中
+      wx.setStorageSync("address",address)
+    } catch (error) {
+      console.log(error)
+    }
   }
 })
