@@ -28,7 +28,15 @@
 4 全选的实现 数据的展示
   1 onShow 获取缓存中的购物车数组
   2 根据购物车中的商品数据 所有的商品都被选中 checked=true  全选就被选中
-*/
+5 总价格和总数量
+  1 都需要商品被选中 我们才拿它来计算
+  2 获取购物车数组
+  3 遍历
+  4 判断商品是否被选中
+  5 总价格 += 商品的单价 * 商品的数量
+  5 总数量 +=商品的数量
+  6 把计算后的价格和数量 设置回data中即可
+  */
 
 import { getSetting, chooseAddress, openSetting } from "../../utils/asyncWx.js";
 import regeneratorRuntime from '../../lib/runtime/runtime';
@@ -37,7 +45,9 @@ Page({
   data:{
     address:{},
     cart:[],
-    allChecked:false
+    allChecked:false,
+    totalPrice:0,
+    totalNum:0
   },
   onShow(){
     // 1.获取缓存中的收货地址信息
@@ -48,12 +58,28 @@ Page({
     // every 数组方法 会遍历 会接收一个回调函数。那么，每一个回调函数都返回true 那么every方法的返回值为true
     // 只要有一个回调函数返回值是false 那么不再循环执行，直接返回false
     // 空数组 调用every,返回值就是true
-    const allChecked = cart.length?cart.every(v=>v.checked):false;
+    // const allChecked = cart.length?cart.every(v=>v.checked):false;
+    let allChecked=true;
+    // 总价格 总数量
+    let totalPrice=0;
+    let totalNum=0;
+    cart.forEach(v=>{
+      if(v.checked){
+        totalPrice+=v.num*v.goods_price;
+        totalNum+=v.num;
+      }else{
+        allChecked=false;
+      }
+    })
+    // 判断数组是否为空
+    allChecked=cart.length!=0?allChecked:false;
     // 2.给data赋值
     this.setData({
       address,
       cart,
-      allChecked
+      allChecked,
+      totalPrice,
+      totalNum
     })
   },
   // 点击 收货地址
