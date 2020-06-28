@@ -67,6 +67,7 @@ Page({
     if (index === -1) {
       //3  不存在 第一次添加
       this.GoodsInfo.num = 1;
+      // 添加选中状态 checked
       this.GoodsInfo.checked = true;
       cart.push(this.GoodsInfo);
     } else {
