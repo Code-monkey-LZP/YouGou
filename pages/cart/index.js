@@ -25,6 +25,9 @@
     2 checked=true;
   1 获取缓存中的购物车数组
   2 把购物车数据 填充到data中
+4 全选的实现 数据的展示
+  1 onShow 获取缓存中的购物车数组
+  2 根据购物车中的商品数据 所有的商品都被选中 checked=true  全选就被选中
 */
 
 import { getSetting, chooseAddress, openSetting } from "../../utils/asyncWx.js";
@@ -33,17 +36,24 @@ import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
   data:{
     address:{},
-    cart:[]
+    cart:[],
+    allChecked:false
   },
   onShow(){
     // 1.获取缓存中的收货地址信息
     const address=wx.getStorageSync("address");
     // 1.获取缓存中的购物车数据
-    const cart = wx.getStorageSync("cart");
+    const cart = wx.getStorageSync("cart")||[];
+    // 1.计算全选
+    // every 数组方法 会遍历 会接收一个回调函数。那么，每一个回调函数都返回true 那么every方法的返回值为true
+    // 只要有一个回调函数返回值是false 那么不再循环执行，直接返回false
+    // 空数组 调用every,返回值就是true
+    const allChecked = cart.length?cart.every(v=>v.checked):false;
     // 2.给data赋值
     this.setData({
       address,
-      cart
+      cart,
+      allChecked
     })
   },
   // 点击 收货地址
