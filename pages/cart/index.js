@@ -66,7 +66,7 @@ Page({
     const address = wx.getStorageSync("address");
     // 1.获取缓存中的购物车数据
     const cart = wx.getStorageSync("cart") || [];
-    this.setData({address});
+    this.setData({ address });
     this.setCart(cart);
   },
   // 点击 收货地址
@@ -98,7 +98,7 @@ Page({
     let index = cart.findIndex(v => v.goods_id === goods_id);
     // 4.选中状态取反
     cart[index].checked = !cart[index].checked;
-     this.setCart(cart);
+    this.setCart(cart);
 
   },
   //设置购物车状态的同时 重新计算底部工具栏的数据 全选 总价格 购买的数量
@@ -136,4 +136,17 @@ Page({
     // 4 把修改后的值 填充回data或者缓存中
     this.setCart(cart);
   },
+  //商品数量的编辑功能
+  handleItemNumEdit(e) {
+    // 1.获取传递过来的参数
+    const { operation, id } = e.currentTarget.dataset;
+    // 2.获取购物车数组
+    let { cart } = this.data;
+    // 3.找到需要修改的商品的索引
+    const index = cart.findIndex(v => v.goods_id === id);
+    // 4.进行修改数量
+    cart[index].num += operation;
+    // 5.设置回缓存和data中
+    this.setCart(cart);
+  }
 })
